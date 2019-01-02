@@ -1,0 +1,26 @@
+## kubernetes kubelet (minion) config
+#
+## The address for the info server to serve on (set to 0.0.0.0 or "" for all interfaces)
+KUBELET_ADDRESS="--address=yun"
+#
+### The port for the info server to serve on
+#KUBELET_PORT="--port=10250"
+#
+## You may leave this blank to use the actual hostname
+KUBELET_HOSTNAME="--hostname-override=yun"
+#
+#
+#KUBELET_API_SERVER="--api_servers=http://T1:8080"
+## pod infrastructure container
+KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google-containers/pause-amd64:3.0"
+#
+## Add your own!
+#KUBELET_ARGS="--cluster-dns=172.21.0.2  --cluster-domain=cluster.local --hairpin-mode promiscuous-bridge --serialize-image-pulls=false --register-node "
+KUBELET_ARGS="--cluster-dns=10.254.0.2 \
+              --bootstrap-kubeconfig=/etc/kubernetes/bootstrap.kubeconfig \
+              --kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
+	      --cert-dir=/etc/kubernetes/ssl \
+              --cluster-domain=cluster.local \
+              --hairpin-mode promiscuous-bridge \
+              --serialize-image-pulls=false \
+	      --cgroup-driver=systemd"

@@ -1,0 +1,49 @@
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  labels:
+    name: grafana
+  name: grafana
+  namespace: monitoring
+spec:
+  serviceName: "grafana"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - image: docker.io/grafana/grafana:latest
+        name: grafana
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        volumeMounts:
+        - name: config-volume
+          mountPath: "/etc/grafana"
+        - name: grafana
+          mountPath: "/var/lib/grafana"
+      imagePullSecrets: 
+        - name: regsecret
+      volumes:
+      - name: config-volume
+        configMap:
+          name: grafana-config
+      - name: grafana
+        persistentVolumeClaim:
+          claimName: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  ports:
+  - port: 3000
+  selector:
+    app: grafana

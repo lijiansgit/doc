@@ -1,0 +1,13 @@
+{
+"kind": "Service",
+"apiVersion": "v1",
+"metadata": {
+"name": "glusterfs-cluster",
+"namespace": "monitoring"
+},
+"spec": {
+"ports": [
+  {"port": 2222}
+]
+}
+}

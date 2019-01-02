@@ -1,0 +1,41 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: test
+  namespace: default
+  labels:
+    app: test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: test
+        image: docker.io/alpine:latest
+        imagePullPolicy: IfNotPresent
+        command:
+        - sleep
+        - "360000000"
+        ports:
+          - name: http
+            containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: test
+  namespace: default
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: test

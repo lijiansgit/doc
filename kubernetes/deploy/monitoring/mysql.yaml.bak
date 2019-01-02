@@ -1,0 +1,49 @@
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  labels:
+    name: mysql
+  name: mysql
+  namespace: monitoring
+spec:
+  serviceName: "mysql"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: docker.io/mysql:5.6
+        env:
+        - name:  "MYSQL_CONFIG_FILE"
+          value: "/var/lib/mysql/my.cnf"
+        - name:  "MYSQL_ROOT_PASSWORD"
+          value: "abc123"
+        name: mysql
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        volumeMounts:
+        - name: mysql
+          mountPath: "/var/lib/mysql"
+      imagePullSecrets: 
+        - name: regsecret
+      volumes:
+      - name: mysql
+        persistentVolumeClaim:
+          claimName: mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: monitoring
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
