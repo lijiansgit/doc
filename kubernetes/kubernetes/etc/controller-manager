@@ -5,7 +5,7 @@
 
 # Add your own!
 KUBE_CONTROLLER_MANAGER_ARGS="--bind-address=127.0.0.1 \
-			      --master=https://yun:6443 \
+			      --master=https://HOSTIP:6443 \
                               --service-cluster-ip-range=10.254.0.0/16 \
                               --cluster-name=kubernetes \
 			      --kubeconfig=/etc/kubernetes/kubelet.kubeconfig \

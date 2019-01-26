@@ -1,6 +1,6 @@
 # Flanneld configuration options  
 # etcd url location.  Point this to the server where etcd runs
-ETCD_ENDPOINTS="https://yun:2379"
+ETCD_ENDPOINTS="https://HOSTIP:2379"
 # etcd config key.  This is the configuration key that flannel queries
 # For address range assignment
 ETCD_PREFIX="/kubernetes/network"

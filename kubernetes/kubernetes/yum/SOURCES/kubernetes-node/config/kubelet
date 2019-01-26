@@ -1,13 +1,13 @@
 ## kubernetes kubelet (minion) config
 #
 ## The address for the info server to serve on (set to 0.0.0.0 or "" for all interfaces)
-KUBELET_ADDRESS="--address=yun"
+KUBELET_ADDRESS="--address=HOSTIP"
 #
 ### The port for the info server to serve on
 #KUBELET_PORT="--port=10250"
 #
 ## You may leave this blank to use the actual hostname
-KUBELET_HOSTNAME="--hostname-override=yun"
+KUBELET_HOSTNAME="--hostname-override=HOSTIP"
 #
 #
 #KUBELET_API_SERVER="--api_servers=http://T1:8080"

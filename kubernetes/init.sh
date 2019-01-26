@@ -1,7 +1,9 @@
 #start
 echo "开始前需要做的工作:"
-echo "1.请绑host: 本机ip yun"
+echo "1.本机IP为：10.0.0.10 则执行grep -rl HOSTIP ./ |xargs sed -i 's/HOSTIP/10.0.0.10/g' "
 echo "2. --insecure-registry hub.test.cn "
+echo "3. wget flannel bin from https://github.com/coreos/flannel/releases/ to /usr/loca/bin"
+echo "4. wget k8s bin from https://kubernetes.io/docs/setup/release/notes/ to /usr/loca/bin"
 #
 
 

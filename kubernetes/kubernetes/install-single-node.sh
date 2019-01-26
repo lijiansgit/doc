@@ -2,6 +2,7 @@
 # wget k8s bin from https://kubernetes.io/docs/setup/release/notes/
 # add node please use yum rpm
 cp bin/* /usr/local/bin/
+chmod +x /usr/local/bin/*
 ####
 PWDROOT=`pwd`
 ETCROOT="/etc/kubernetes"
@@ -17,18 +18,18 @@ cd ssl/
 cfssl gencert -initca k8s-root-ca-csr.json | cfssljson -bare k8s-root-ca
 for targetName in kubernetes admin kube-proxy; do cfssl gencert --ca k8s-root-ca.pem --ca-key k8s-root-ca-key.pem --config k8s-gencert.json --profile kubernetes $targetName-csr.json | cfssljson --bare $targetName; done
 cd ../
-mkdir ${ETCROOT}/ssl
+mkdir -pv ${ETCROOT}/ssl
 cp -pr ssl/*.pem  ${ETCROOT}/ssl/
 cp -pr ssl/*.csr  ${ETCROOT}/ssl/
 cp -pr etc/* ${ETCROOT}/
 #kubeconfig 
 cd ${ETCROOT}
-RANDOM=`openssl rand -hex 30`
+TRANDOM=`openssl rand -hex 20`
 cat > token.csv <<EOF
-${RANDOM},kubelet-bootstrap,10001,"system:kubelet-bootstrap"
+${TRANDOM},kubelet-bootstrap,10001,"system:kubelet-bootstrap"
 EOF
 #export KUBE_APISERVER="https://lvs:6443"
-export KUBE_APISERVER="https://yun:6443"
+export KUBE_APISERVER="https://HOSTIP:6443"
 
 kubectl config set-cluster kubernetes \
   --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem \
