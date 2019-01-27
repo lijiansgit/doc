@@ -6,8 +6,9 @@ echo "3. wget flannel bin from https://github.com/coreos/flannel/releases/ to /u
 echo "4. wget k8s bin from https://kubernetes.io/docs/setup/release/notes/ to /usr/loca/bin"
 #
 
-
-
+#yum
+yum install -y libnetfilter_conntrack-devel libnetfilter_conntrack conntrack-tools ipvsadm wget
+# ssl tools
 wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
 chmod +x cfssl_linux-amd64
 mv cfssl_linux-amd64 /usr/local/bin/cfssl
