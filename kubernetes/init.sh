@@ -8,6 +8,9 @@ echo "4. wget k8s bin from https://kubernetes.io/docs/setup/release/notes/ to /u
 
 #yum
 yum install -y libnetfilter_conntrack-devel libnetfilter_conntrack conntrack-tools ipvsadm wget
+#systctl
+echo "vm.swappiness = 0" >> /etc/sysctl.conf
+swapoff -a
 # ssl tools
 wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
 chmod +x cfssl_linux-amd64
