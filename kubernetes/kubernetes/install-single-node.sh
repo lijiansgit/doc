@@ -9,7 +9,9 @@ ETCROOT="/etc/kubernetes"
 #init system
 ntpdate -u ntp.aliyun.com
 #init network config
-#etcdctl set /kubernetes/network/config '{"Network":"172.20.0.0/16","SubnetLen":24,"Backend":{ "Type": "vxlan", "VNI": 1 }}'
+etcdctl --cert-file /etc/etcd/ssl/etcd.pem --key-file /etc/etcd/ssl/etcd-key.pem \
+--ca-file /etc/etcd/ssl/etcd-root-ca.pem --endpoints https://127.0.0.1:2379 \
+set /kubernetes/network/config '{"Network":"172.20.0.0/16","SubnetLen":24,"Backend":{ "Type": "vxlan", "VNI": 1 }}'
 if [ $? -ne 0 ];then
 	echo "etcdctl set ......."
 fi

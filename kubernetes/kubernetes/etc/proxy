@@ -4,7 +4,7 @@
 # default config should be adequate
 
 # Add your own!
-KUBE_PROXY_ARGS="--kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig 
+KUBE_PROXY_ARGS="--kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig \
 		         --bind-address=HOSTIP \
 		         --cluster-cidr=10.254.0.0/16 \
 		         --proxy-mode=ipvs \
