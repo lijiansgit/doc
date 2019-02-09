@@ -1,0 +1,39 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: NAMESPACE
+  name: user-USERNAME
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log", "services", "replicationcontrollers"]
+  verbs:     ["get", "watch", "list"]
+# Allow user into pod by 'exec'
+#- apiGroups: [""]
+#  resources: ["pods/exec"]
+#  verbs:     ["create"]    
+- apiGroups: ["extensions", "apps"]
+  resources: ["deployments", "replicasets", "statefulsets"]
+  verbs:     ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources: ["cronjobs", "jobs"]
+  verbs:     ["get", "list", "watch"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: user-USERNAME
+  namespace: NAMESPACE
+subjects:
+- kind: User
+  name: USERNAME
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: user-USERNAME
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: user-USERNAME
+  namespace: NAMESPACE
