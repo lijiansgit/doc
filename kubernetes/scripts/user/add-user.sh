@@ -26,18 +26,18 @@ export KUBE_APISERVER="https://yun.com:6443"
 kubectl config set-cluster kubernetes \
   --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem \
   --embed-certs=true \
-  --server=${KUBE_APISERVER}
+  --server=${KUBE_APISERVER} \
   --kubeconfig=$USERNAME.kubeconfig
 
 kubectl config set-credentials $USERNAME \
   --client-certificate=$USERNAME.pem \
   --embed-certs=true \
-  --client-key=$USERNAME-key.pem
+  --client-key=$USERNAME-key.pem \
   --kubeconfig=$USERNAME.kubeconfig
 
 kubectl config set-context kubernetes \
   --cluster=kubernetes \
-  --user=$USERNAME
+  --user=$USERNAME \
   --kubeconfig=$USERNAME.kubeconfig
 
 kubectl config use-context kubernetes --kubeconfig=$USERNAME.kubeconfig
