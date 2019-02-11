@@ -18,7 +18,7 @@ spec:
       serviceAccountName: kube-state-metrics
       containers:
       - name: kube-state-metrics
-        image: registry.qtt6.cn/library/kube-state-metrics:v1.3.1
+        image: quay.io/coreos/kube-state-metrics:v1.5.0
         ports:
         - name: http-metrics
           containerPort: 8080
@@ -31,7 +31,7 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 5
       - name: addon-resizer
-        image: registry.qtt6.cn/library/addon-resizer:1.7
+        image: siriuszg/addon-resizer:2.1
         env:
           - name: MY_POD_NAME
             valueFrom:
@@ -48,7 +48,6 @@ spec:
           - --extra-cpu=10m
           - --memory=100Mi
           - --extra-memory=20Mi
-          - --threshold=5
           - --deployment=kube-state-metrics
 ---
 apiVersion: rbac.authorization.k8s.io/v1
