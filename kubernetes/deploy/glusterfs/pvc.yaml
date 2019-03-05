@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: mysql
+  name: grafana
 spec:
   capacity:
     storage: 5Gi
@@ -9,13 +9,13 @@ spec:
     - ReadWriteMany
   glusterfs:
     endpoints: "glusterfs-cluster"
-    path: "vol-mysql"
+    path: "vol-grafana"
     readOnly: false
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mysql
+  name: grafana
   namespace: monitoring
 spec:
   accessModes:
@@ -26,35 +26,6 @@ spec:
     requests:
       storage: 1Gi
 #prome
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: prometheus
-spec:
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteMany
-  glusterfs:
-    endpoints: "glusterfs-cluster"
-    path: "vol-prometheus"
-    readOnly: false
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: prometheus 
-  namespace: monitoring
-spec:
-  accessModes:
-    - ReadWriteMany
-  resources:
-    limits:
-      storage: 10Gi
-    requests:
-      storage: 1Gi
-#gitlab
 ---
 apiVersion: v1
 kind: PersistentVolume
