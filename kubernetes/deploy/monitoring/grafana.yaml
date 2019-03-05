@@ -28,8 +28,6 @@ spec:
           mountPath: "/etc/grafana"
         - name: grafana
           mountPath: "/var/lib/grafana"
-      imagePullSecrets: 
-        - name: regsecret
       volumes:
       - name: config-volume
         configMap:

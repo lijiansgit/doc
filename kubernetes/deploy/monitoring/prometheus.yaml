@@ -36,8 +36,6 @@ spec:
         - name: prometheus
           mountPath: "/prometheus"
       serviceAccountName: prometheus
-      imagePullSecrets: 
-        - name: regsecret
       volumes:
       - name: config-volume
         configMap:
