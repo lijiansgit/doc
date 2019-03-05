@@ -18,6 +18,7 @@ spec:
     spec:
       containers:
       - image: docker.io/prom/prometheus:latest
+        imagePullPolicy: IfNotPresent
         name: prometheus
         command:
         - "/bin/prometheus"
