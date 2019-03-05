@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  labels:
+    name: pushgateway
+  name: pushgateway
+  namespace: monitoring
+spec:
+  serviceName: "pushgateway"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pushgateway
+  template:
+    metadata:
+      labels:
+        app: pushgateway
+    spec:
+      hostNetwork: true
+      containers:
+      - image: docker.io/prom/pushgateway:v0.7.0
+        imagePullPolicy: IfNotPresent
+        name: pushgateway
+        ports:
+        - containerPort: 9091
+          protocol: TCP
