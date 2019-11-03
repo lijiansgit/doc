@@ -30,24 +30,28 @@ TRANDOM=`openssl rand -hex 20`
 cat > token.csv <<EOF
 ${TRANDOM},kubelet-bootstrap,10001,"system:kubelet-bootstrap"
 EOF
-#export KUBE_APISERVER="https://lvs:6443"
+#export KUBE_APISERVER="https://lvs.com:6443"
 export KUBE_APISERVER="https://HOSTIP:6443"
-
+# admin config
 kubectl config set-cluster kubernetes \
   --certificate-authority=/etc/kubernetes/ssl/k8s-root-ca.pem \
   --embed-certs=true \
-  --server=${KUBE_APISERVER}
+  --server=${KUBE_APISERVER} \
+  --kubeconfig=admin.kubeconfig
 
 kubectl config set-credentials admin \
   --client-certificate=/etc/kubernetes/ssl/admin.pem \
   --embed-certs=true \
-  --client-key=/etc/kubernetes/ssl/admin-key.pem
+  --client-key=/etc/kubernetes/ssl/admin-key.pem \
+  --kubeconfig=admin.kubeconfig
 
 kubectl config set-context kubernetes \
   --cluster=kubernetes \
-  --user=admin
+  --user=admin \
+  --kubeconfig=admin.kubeconfig
 
-kubectl config use-context kubernetes
+kubectl config use-context kubernetes  --kubeconfig=admin.kubeconfig
+mv admin.kubeconfig ~/.kube/config
 ###
 #bootstrap.kubeconfig
 kubectl config set-cluster kubernetes \
@@ -57,7 +61,7 @@ kubectl config set-cluster kubernetes \
   --kubeconfig=bootstrap.kubeconfig
 
 kubectl config set-credentials kubelet-bootstrap \
-  --token=670c7109e49e6e35cf16ae8bfc1f4f77 \
+  --token=${TRANDOM} \
   --kubeconfig=bootstrap.kubeconfig
 
 kubectl config set-context default \
