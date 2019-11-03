@@ -114,6 +114,8 @@ kubectl config set-context default \
 kubectl config use-context default --kubeconfig=kubelet.kubeconfig
 #dockerd
 yum install docker -y
+#cp flanneld bin
+cp bin/mk-docker-opts.sh /usr/local/bin/mk-docker-opts.sh && chmod +x /usr/local/bin/mk-docker-opts.sh
 #service and start
 cp  ${PWDROOT}/service/*.service /usr/lib/systemd/system/
 for I in kube-apiserver kube-controller-manager kube-scheduler flanneld docker kube-proxy kubelet;do
