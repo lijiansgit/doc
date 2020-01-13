@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+
+ ldap-pwd:
+  image: dockergogolj/centos:7.7.1908-tools-php5.4-httpd
+  command: ["httpd-foreground"]
+  volumes:
+   - ./data/var/www/html:/var/www/html:rw
+  restart: always
+  environment:
+    TZ: Asia/Shanghai
+  ports:
+   - "8080:80"
+  user: root
+  healthcheck:
+    test: ["CMD", "curl", "http://127.0.0.1:80"]
+    interval: 10s
+    timeout: 5s
+    retries: 3
+  stop_grace_period: 10s

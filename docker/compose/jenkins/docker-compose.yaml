@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+
+  server:
+    #image: jenkins:2.60.3
+    #image: jenkinsci/blueocean:1.21.0
+    image: jenkins/jenkins:2.204.1-centos
+    volumes:
+      - ./data/var/jenkins_home:/var/jenkins_home:rw
+      - ./data/usr/local/go:/usr/local/go:ro
+      - ./data/usr/local/node:/usr/local/node:ro
+      - /root/.ssh:/root/.ssh:ro
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    user: root
+    stop_grace_period: 10s
