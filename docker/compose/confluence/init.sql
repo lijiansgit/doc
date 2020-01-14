@@ -1,3 +1,3 @@
 create database confluence;
-GRANT ALL PRIVILEGES ON confluence.* TO 'confluence'@'%' IDENTIFIED BY 'confluence@yj' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON confluence.* TO 'confluence'@'%' IDENTIFIED BY 'confluence' WITH GRANT OPTION;
 flush privileges;
