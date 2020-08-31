@@ -1,3 +1,4 @@
+set -e
 yum install etcd -y
 systemctl enable etcd
 #ssl
@@ -13,4 +14,6 @@ chown etcd.etcd /etc/etcd/ssl/*
 cp etcd.conf /etc/etcd/etcd.conf
 echo "alias etcdctl='etcdctl --cert-file /etc/etcd/ssl/etcd.pem --key-file /etc/etcd/ssl/etcd-key.pem --ca-file /etc/etcd/ssl/etcd-root-ca.pem --endpoints https://127.0.0.1:2379'" >> ~/.bashrc
 . ~/.bashrc
-echo -e "1.请按照实际情况更改/etc/etcd/etcd.conf\n2.systemctl start etcd"
+source  ~/.bashrc
+systemctl start etcd
+echo -e "1.如有变化或者报错，请按照实际情况更改/etc/etcd/etcd.conf\n2.systemctl start etcd\n3.source  ~/.bashrc"

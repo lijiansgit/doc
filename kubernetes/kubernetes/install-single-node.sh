@@ -1,11 +1,17 @@
 # wget flannel bin from https://github.com/coreos/flannel/releases/
 # wget k8s bin from https://kubernetes.io/docs/setup/release/notes/
 # add node please use yum rpm
-cp bin/* /usr/local/bin/
+set -e
+
+/usr/bin/cp -prf bin/* /usr/local/bin/
 chmod +x /usr/local/bin/*
 ####
 PWDROOT=`pwd`
 ETCROOT="/etc/kubernetes"
+
+#clean
+/usr/bin/mv -f ${ETCROOT} /tmp
+/usr/bin/mv -f /usr/lib/systemd/system/kube* /tmp
 #init system
 ntpdate -u ntp.aliyun.com
 #init network config
@@ -19,12 +25,12 @@ fi
 cd ssl/
 cfssl gencert -initca k8s-root-ca-csr.json | cfssljson -bare k8s-root-ca
 for targetName in kubernetes admin kube-proxy; do cfssl gencert --ca k8s-root-ca.pem --ca-key k8s-root-ca-key.pem --config k8s-gencert.json --profile kubernetes $targetName-csr.json | cfssljson --bare $targetName; done
-cd ../
+cd ${PWDROOT}
 mkdir -pv ${ETCROOT}/ssl
-cp -pr ssl/*.pem  ${ETCROOT}/ssl/
-cp -pr ssl/*.csr  ${ETCROOT}/ssl/
-cp -pr etc/* ${ETCROOT}/
-#kubeconfig 
+/usr/bin/cp -prf ssl/*.pem  ${ETCROOT}/ssl/
+/usr/bin/cp -prf ssl/*.csr  ${ETCROOT}/ssl/
+/usr/bin/cp -prf etc/* ${ETCROOT}/
+#kubeconfig
 cd ${ETCROOT}
 TRANDOM=`openssl rand -hex 20`
 cat > token.csv <<EOF
@@ -114,10 +120,9 @@ kubectl config set-context default \
 kubectl config use-context default --kubeconfig=kubelet.kubeconfig
 #dockerd
 yum install docker -y
-#cp flanneld bin
-cp bin/mk-docker-opts.sh /usr/local/bin/mk-docker-opts.sh && chmod +x /usr/local/bin/mk-docker-opts.sh
 #service and start
-cp  ${PWDROOT}/service/*.service /usr/lib/systemd/system/
+/usr/bin/cp -prf ${PWDROOT}/service/*.service /usr/lib/systemd/system/
+systemctl daemon-reload
 for I in kube-apiserver kube-controller-manager kube-scheduler flanneld docker kube-proxy kubelet;do
 	systemctl enable ${I}
 	echo "start ${I}..."
