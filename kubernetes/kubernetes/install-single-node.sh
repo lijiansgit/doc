@@ -10,10 +10,10 @@ PWDROOT=`pwd`
 ETCROOT="/etc/kubernetes"
 
 #clean
-/usr/bin/mv -f ${ETCROOT} /tmp
+#/usr/bin/mv -f ${ETCROOT} /tmp
 /usr/bin/mv -f /usr/lib/systemd/system/kube* /tmp
 #init system
-ntpdate -u ntp.aliyun.com
+#ntpdate -u ntp.aliyun.com
 #init network config
 etcdctl --cert-file /etc/etcd/ssl/etcd.pem --key-file /etc/etcd/ssl/etcd-key.pem \
 --ca-file /etc/etcd/ssl/etcd-root-ca.pem --endpoints https://127.0.0.1:2379 \

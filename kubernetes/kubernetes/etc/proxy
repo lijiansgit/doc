@@ -5,10 +5,10 @@
 
 # Add your own!
 KUBE_PROXY_ARGS="--kubeconfig=/etc/kubernetes/kube-proxy.kubeconfig \
-		         --bind-address=HOSTIP \
-		         --cluster-cidr=10.254.0.0/16 \
-		         --proxy-mode=ipvs \
-                 --ipvs-min-sync-period=2s \
-                 --ipvs-sync-period=3s \
-                 --ipvs-scheduler=wlc"
+    --bind-address=HOSTIP \
+    --cluster-cidr=10.254.0.0/16 \
+    --proxy-mode=ipvs \
+    --ipvs-min-sync-period=2s \
+    --ipvs-sync-period=3s \
+    --ipvs-scheduler=wlc"
 

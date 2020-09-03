@@ -7,10 +7,23 @@ echo "4. wget k8s bin from https://kubernetes.io/docs/setup/release/notes/ to /u
 #
 
 #yum
-yum install -y libnetfilter_conntrack-devel libnetfilter_conntrack conntrack-tools ipvsadm wget
+yum install -y libnetfilter_conntrack-devel libnetfilter_conntrack conntrack-tools ipvsadm wget chrony
+systemctl enable chronyd
+systemctl start chronyd
 #systctl
 echo "vm.swappiness = 0" >> /etc/sysctl.conf
 swapoff -a
+echo "swapoff -a" >> /etc/rc.d/rc.local
+chmod +x /etc/rc.d/rc.local
+# 将 SELinux 设置为 permissive 模式（相当于将其禁用）
+setenforce 0
+sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+# bug: https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
+cat <<EOF >  /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+sysctl --system
 # ssl tools
 wget https://pkg.cfssl.org/R1.2/cfssl_linux-amd64
 chmod +x cfssl_linux-amd64
