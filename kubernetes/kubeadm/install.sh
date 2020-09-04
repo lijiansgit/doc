@@ -13,6 +13,10 @@ swapoff -a
 # 将 SELinux 设置为 permissive 模式（相当于将其禁用）
 setenforce 0
 sed -i 's/^SELINUX=enforcing$/SELINUX=disabled/' /etc/selinux/config
+# 时间同步
+yum install chrony -y
+systemctl enable chronyd
+systemctl start chronyd
 
 # install docker
 # 安装 Docker CE
