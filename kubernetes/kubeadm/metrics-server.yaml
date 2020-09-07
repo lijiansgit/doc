@@ -112,7 +112,7 @@ spec:
       protocol: TCP
       targetPort: 443
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: metrics-server

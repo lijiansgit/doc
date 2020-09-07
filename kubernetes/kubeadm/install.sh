@@ -51,6 +51,7 @@ EOF
 mkdir -p /etc/systemd/system/docker.service.d
 # 重启 Docker
 systemctl daemon-reload
+systemctl enable docker
 systemctl restart docker
 
 # install kubelet kubeadm kubectl
