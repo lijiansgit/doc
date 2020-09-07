@@ -80,9 +80,10 @@ sysctl --system
 # echo "KUBELET_EXTRA_ARGS=--cgroup-driver=systemd" > /etc/sysconfig/kubelet
 
 # install
-#kubeadm init --dry-run
+# kubeadm init --dry-run
+# bak: --image-repository registry.cn-hangzhou.aliyuncs.com/mirror-overseas
 kubeadm init --kubernetes-version=1.19.0 \
-    --image-repository registry.cn-hangzhou.aliyuncs.com/mirror-overseas \
+    --image-repository registry.cn-hangzhou.aliyuncs.com/google_containers \
     --pod-network-cidr 10.244.0.0/16 \
     --service-cidr 10.96.0.0/12
 
@@ -104,11 +105,3 @@ kubectl get nodes
 kubectl -n kube-system get pods
 
 exit
-# install helm
-yum install wget -y
-wget https://get.helm.sh/helm-v3.3.1-linux-amd64.tar.gz -O /tmp/helm.tar.gz
-tar xf /tmp/helm.tar.gz
-mv linux-amd64/helm /sbin/
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
-helm completion bash >> /etc/profile.d/k8s.sh
-source /etc/profile.d/k8s.sh
